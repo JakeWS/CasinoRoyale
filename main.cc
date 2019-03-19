@@ -1,5 +1,5 @@
 #include <iostream>
-#include "screaming.cc"
+#include "slots.cc"
 #include "login.cc"
 
 using namespace std;
