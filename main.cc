@@ -30,7 +30,6 @@ mainMenu::mainMenu()
         cin>>menuChoice;
         if(menuChoice == 0)
         {
-            newLogin.~logIn();
             menuContinue = 0;
         }
         else if (menuChoice == 1)
