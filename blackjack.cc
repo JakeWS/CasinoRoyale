@@ -1,11 +1,17 @@
 #include <iostream>
+#include <Card.cc>
+#include <Card.h>
 #include <cardFunctions.h>
+#include <Deck.cc>
+#include <Deck.h>
+#include <CardTest.cc>
 
 using namesapce.std;
 
 class BlackJack
 {
   private:
+  
   public:
     BlackJack();        // Blackjack constructor
     ~BlackJack();       // Blackjack destructor
@@ -24,6 +30,7 @@ class BlackJack
     void Stay();        // Stay means "i am done, give me no more cards"
 };
 
+//Main Function
 int main()
 {
   BlackJack newBlackJack();
@@ -42,16 +49,18 @@ BlackJack::BlackJack()
     
     if(userChoice == 0)
     {
-      cout<<"Exiting"<<endl;
+      cout<<"Exiting..."<<endl;
       continueLoop = 0;
     }
     else if(userChoice == 1)
     {
-      
+      Hit();
+      countHand();
     }
     else if(userChoice == 2)
     {
-      
+      Stay();
+      countHand();
     }
     else
     {
@@ -70,16 +79,21 @@ BlackJack::~BlackJack()
 void BlackJack::countHand()
 {
   short cardTotal;
+  card userHand;
   
   
+
 }
 
 // Player discards hand
 void BlackJack::discardHand()
 {
+  card discardPile;
   // idk???? 
   // if the user knows they r gonna lose, then i guess the deconstructor?
   cout<<"Discarding Hand."<<endl;
+  // the cards go into the discard pile
+  
   
 }
 
@@ -87,17 +101,54 @@ void BlackJack::discardHand()
 void BlackJack::detWin()
 {
   // if cardTotal = 21 then yay u win
+  short cardTotoal;
+  
+  if(cardTotal == 21) // if player has a winning hand (21) 
+  {
+    cout<<"Congradulations!! You win!"<<endl;
+    cout<<"What would you like to do now?"endl<<"0. Exit"<<endl<<"1. Play Again"<<endl;
+    cin>>userChoice;
+
+    if(userChoice == 0)
+    {
+      cout<<"Exiting..."<<endl;
+    }
+    else if(userchoice == 1)
+    {
+      BlackJack();  // starts a new game
+    }
+  }
+  else if(cardTotal > 21) // if sum of cards is > 21
+  {
+    cout<<"Sorry, you lose!"<<endl;
+    cout<<"What would you like to do now?"endl<<"0. Exit"<<endl<<"1. Play Again"<<endl;
+    cin>>userChoice;
+
+    if(userChoice == 0)
+    {
+      cout<<"Exiting..."<<endl;
+    }
+    else if(userchoice == 1)
+    {
+      BlackJack();  // starts a new game
+    }
+  }
 }
 
 // Hit function
 void BlackJack::Hit()
 {
+  card userHand;
+  card drawPile;
+  card dealCards;
   //deals a card 
 }
 
 // Stay function
 void BlackJack::Stay()
 {
+  card userHand;
+  short cardTotal;
   // doesnt deal a card
 }
 
