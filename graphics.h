@@ -6,8 +6,9 @@
  ***************************************/
 
  #include <iostream>
+ #include <stdio>
 
-usig namespace std;
+using namespace.std;
 
 
  class Graphics
@@ -19,7 +20,7 @@ usig namespace std;
       //void setSize();
  };
 
-Graphics:: setFont()
+Graphics::setFont()
 {
   cout<<"Set Font Function"<<endl;
 }

@@ -1,17 +1,20 @@
 // Options.cc
 
 #include <iostream>
-#include <graphics.h>
+#include <stdio>
+#include "graphics.h"
 
-using namespace std;
+using namespace.std;
 
 class Options
 {
   private:
 
   public:
-    bool usedAction;
-    bool userFont;
+    bool continueLoop;
+    int userAction;
+    int userFont;
+    int userChoice;
     Options();  // constructor
     void changeFont(); //uses graphics.h
     void changeColor();  // uses graphics.h
@@ -27,15 +30,15 @@ class Options
 
 int main()
 {
-  Options newOptions();
+  Options newOptions;
 }
 
 Options::Options()
 {
   bool continueLoop = true;
-  bool userAction;  // users action to choose to change font / Color / DN
-  bool userFont;    // users font choice
-  bool userChoice;  // users color choice
+  int userAction;  // users action to choose to change font / Color / DN
+  int userFont;    // users font choice
+  int userChoice;  // users color choice
 
   while(continueLoop)
   {
