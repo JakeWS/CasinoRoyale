@@ -1,7 +1,6 @@
 // Options.cc
 
 #include <iostream>
-#include <stdio>
 #include "graphics.h"
 
 using namespace.std;
