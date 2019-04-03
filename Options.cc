@@ -1,11 +1,7 @@
-/**************************************
- * Options.cc
- * Coded by: Elizabeth Soechting
- *
- **************************************/
+// Options.cc
 
 #include <iostream>
-#include <graphics.h>
+//#include <graphics.h>
 
 using namespace.std;
 
