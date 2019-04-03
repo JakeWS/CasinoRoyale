@@ -1,9 +1,9 @@
 // Options.cc
 
 #include <iostream>
-//#include <graphics.h>
+#include <graphics.h>
 
-using namespace.std;
+using namespace std;
 
 class Options
 {
@@ -62,11 +62,13 @@ Options::Options();
       {
         cout<<"Setting font to desired font choice..."<<endl;
         //set font function
+        setFont(1);
       }
       else if(userFont == 2)
       {
         cout<<"Setting font to desired font choice..."<<endl;
         //set font function
+        setFont(2);
       }
       else
       {

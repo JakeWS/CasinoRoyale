@@ -7,6 +7,9 @@
 
  #include <iostream>
 
+usig namespace std;
+
+
  class Graphics
  {
    private:
