@@ -1,4 +1,8 @@
-// Options.cc
+/**************************************
+ * Options.cc
+ * Coded by: Elizabeth Soechting
+ *
+ **************************************/
 
 #include <iostream>
 #include <graphics.h>
