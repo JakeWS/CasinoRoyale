@@ -30,7 +30,7 @@ int main()
   Options newOptions();
 }
 
-Options::Options();
+Options::Options()
 {
   bool continueLoop = true;
   bool userAction;  // users action to choose to change font / Color / DN
