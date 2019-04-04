@@ -41,7 +41,7 @@ BlackJack::BlackJack()
 {
   bool continueLoop = true;
   int userChoice;
-
+// mem alloc.
   while(continueLoop)
   {
     std::cout<<"What would you like to do?"<<std::endl<<"0. Exit Game."<<std::endl<<"1. Hit."<<std::endl<<"2. Stay."<<std::endl;
@@ -50,7 +50,9 @@ BlackJack::BlackJack()
     if(userChoice == 0)
     {
       std::cout<<"Exiting..."<<std::endl;
-      continueLoop = 0;
+      continueLoop = false;
+
+    //  make continueloop a method
     }
     else if(userChoice == 1)
     {
@@ -70,6 +72,7 @@ BlackJack::BlackJack()
 }
 
 // ~BlackJack
+// mem alloc.
 BlackJack::~BlackJack()
 {
   std::cout<<"Leaving the game."<<std::endl;
