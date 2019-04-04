@@ -5,7 +5,11 @@
  * SE 310 & SE 420
  ***************************************/
 
- #include <iostream>
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <stdafx.h>
+#include <windows.h>x
 
 using namespace.std;
 
