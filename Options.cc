@@ -3,7 +3,7 @@
 #include <iostream>
 #include "graphics.h"
 
-using namespace.std;
+using namespace std;
 
 class Options
 {
@@ -15,15 +15,8 @@ class Options
     int userFont;
     int userChoice;
     Options();  // constructor
-    void changeFont(); //uses graphics.h
-    void changeColor();  // uses graphics.h
-
-    /********************
-     * implement these (?) probs defer tbh
-     * textheight();
-     * textwidth();
-     * setcolor();
-     *******************/
+    //int setFont(); //uses graphics.hpp
+    //int setColor();  // uses graphics.hpp
 };
 
 
@@ -91,12 +84,12 @@ Options::Options()
       else if(userChoice == 1)  // Color 1
       {
         cout<<"Setting font color to desired color..."<<endl;
-        //set font function
+        //set color function
       }
       else if(userChoice == 2)  // Color2
       {
         cout<<"Setting font color to desired color..."<<endl;
-        //set font function
+        //set color function
       }
       else
       {
