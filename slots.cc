@@ -7,20 +7,24 @@ using namespace std;
 
 class SlotMachine{
   private:
-    vector<int> slots[3] = {{9,9,9,8,9},{8,8,8,7,8},{7,7,7,7,7}};
+	vector<int> slotsFRow = {};
+	vector<int> slotsSRow = {};
+	vector<int> slotsTRow = {};
     double returnAmount;
-    vector<int> threeByThreeSlotPayouts[5] = {{9,9,9},{9,8,9},{8,8,8},{8,7,8},{7,7,7}};
-    vector<int> fourByFourSlotPayouts[5] = {{9,9,9,9},{9,8,8,9},{8,8,8,8},{8,7,7,8},{7,7,7,7}};
-    vector<int> fiveByFiveSlotPayouts[5] = {{9,9,9,9,9},{9,8,8,8,9},{8,8,8,8,8},{8,8,7,8,8},{7,7,7,7,7}};
+    int threeRowPayout[5][3] = {{9,9,9},{9,8,9},{8,8,8},{8,7,8},{7,7,7}};
+	int fourRowPayout[5][4] = {{9,9,9,9},{9,8,8,9},{8,8,8,8},{8,7,7,8},{7,7,7,7} };
+	int fiveRowPayout[5][5] = {{9,9,9,9,9},{9,8,8,8,9},{8,8,8,8,8},{8,8,7,8,8},{7,7,7,7,7}};
   public:
     SlotMachine();
     ~SlotMachine();
-    void threeByThree();
-    void fourByFour();
-    void fiveByFive();        
+    void threeRowSpin();
+    void fourRowSpin();
+    void fiveRowSpin();        
     void rollSlot();
     void readSlot();
-    void determine3x3Winnings();
+    void det3RowWin();
+	void det4RowWin();
+	void det5RowWin();
 };
 
 /*int main()
@@ -45,15 +49,15 @@ SlotMachine::SlotMachine()
         }
         else if(userChoice == 1)
         {
-            threeByThree();
+            threeRowSpin();
         }
         else if(userChoice == 2)
         {
-          fourByFour();
+          fourRowSpin();
         }
         else if(userChoice == 3)
         {
-          fiveByFive();
+          fiveRowSpin();
         }
         else
         {
@@ -66,7 +70,7 @@ SlotMachine::~SlotMachine()
   cout<<"Slot machine powered off."<<endl;
 }
 
-void SlotMachine::threeByThree()
+void SlotMachine::threeRowSpin()
 {
     int rows = 3;
     int columns = 3;
@@ -85,7 +89,7 @@ void SlotMachine::threeByThree()
         {
             rollSlot();
             readSlot();
-            determine3x3Winnings();
+            det3RowWin();
         }
         else
         {
@@ -95,7 +99,7 @@ void SlotMachine::threeByThree()
     }
 }
 
-void SlotMachine::fourByFour()
+void SlotMachine::fourRowSpin()
 {
     int rows = 4;
     int columns = 4;
@@ -114,7 +118,7 @@ void SlotMachine::fourByFour()
         {
             rollSlot();
             readSlot();
-            determine3x3Winnings();
+            det4RowWin();
         }
         else
         {
@@ -124,7 +128,7 @@ void SlotMachine::fourByFour()
     }
 }
 
-void SlotMachine::fiveByFive()
+void SlotMachine::fiveRowSpin()
 {
     int rows = 5;
     int columns = 5;
@@ -143,7 +147,7 @@ void SlotMachine::fiveByFive()
         {
             rollSlot();
             readSlot();
-            determine3x3Winnings();
+            det5RowWin();
         }
         else
         {
@@ -157,47 +161,115 @@ void SlotMachine::rollSlot()
 {
     random_device rd;
     mt19937 mt(rd());
-    int rows = 3;
-    int columns = 5;
-    for(int idx1 = 0; idx1 < rows; idx1++)
-    {
-        this->slots[idx1].clear();
-        for(int idx2 = 0; idx2 < columns; idx2++)
+	uniform_int_distribution<int> dist(0, 9);
+        this->slotsFRow.clear();
+		this->slotsSRow.clear();
+		this->slotsTRow.clear();
+        for(int idx2 = 0; idx2 < 5; idx2++)
         {
-          uniform_int_distribution<int> dist(0, 9);
-          //this->slots[idx1].push_back(dist(mt));
+          this->slotsFRow.push_back(dist(mt));
+		  this->slotsSRow.push_back(dist(mt));
+		  this->slotsTRow.push_back(dist(mt));
         }
-    }
 }
 
 void SlotMachine::readSlot()
 {
-    int rows = 3;
-    int columns = 5;
-    for(int idx1 = 0; idx1 < rows; idx1++)
-    {
-        for(int idx2 = 0; idx2 < columns; idx2++)
+        for(int idx1 = 0; idx1 < 5; idx1++)
         {
-            cout<<this->slots[idx1][idx2]<< "";
+            cout<<this->slotsFRow[idx1]<< "";
         }
+		cout << endl;
+		for (int idx1 = 0; idx1 < 5; idx1++)
+		{
+			cout << this->slotsSRow[idx1]<< "";
+		}
         cout<<endl;
-    }
+		for (int idx1 = 0; idx1 < 5; idx1++)
+		{
+			cout << this->slotsTRow[idx1] << "";
+		}
+		cout << endl;
 }
 
-void SlotMachine::determine3x3Winnings()
+void SlotMachine::det3RowWin()
 {
-  int slotMatches = 0;
-  int rows = 3;
-  for (int idx1 = 0; idx1 < rows; idx1++)
-  {
-    for (int idx2 = 0; idx2 < 5; idx2++)
-    {
-      if(search(this->threeByThreeSlotPayouts[idx1].begin(), this->threeByThreeSlotPayouts[idx1].end(), this->slots[idx2].begin(), this->slots[idx2].end()) != this->threeByThreeSlotPayouts[idx1].end()) //This isn't working. Fuck me -Jake
-      {
-        slotMatches++;
-        cout<<"Match on row "<<(rows + 1)<<endl;
-      }
-    }
-  }
-  cout<<"Matches: "<<slotMatches<<endl;  
+	short slotsMatches = 0;
+	for (int idx1 = 0; idx1 < 3; idx1++)
+	{
+		for (int idx2 = 0; idx2 < 5; idx2++)
+		{
+			if (slotsFRow[idx1] == threeRowPayout[idx2][0] && slotsFRow[idx1 + 1] == threeRowPayout[idx2][1] && slotsFRow[idx1 + 2] == threeRowPayout[idx2][2])
+			{
+				cout << "Match found in row 1!" << endl;
+				slotsMatches++;
+			}
+			if (slotsSRow[idx1] == threeRowPayout[idx2][0] && slotsSRow[idx1 + 1] == threeRowPayout[idx2][1] && slotsSRow[idx1 + 2] == threeRowPayout[idx2][2])
+			{
+				cout << "Match found in row 2!" << endl;
+				slotsMatches++;
+			}
+			if (slotsTRow[idx1] == threeRowPayout[idx2][0] && slotsTRow[idx1 + 1] == threeRowPayout[idx2][1] && slotsTRow[idx1 + 2] == threeRowPayout[idx2][2])
+			{
+				cout << "Match found in row 3!" << endl;
+				slotsMatches++;
+			}
+		}
+	}
+	cout << slotsMatches << " found in your roll!" << endl;
+}
+
+void SlotMachine::det4RowWin()
+{
+	short slotsMatches = 0;
+	for (int idx1 = 0; idx1 < 2; idx1++)
+	{
+		for (int idx2 = 0; idx2 < 5; idx2++)
+		{
+			if (slotsFRow[idx1] == fourRowPayout[idx2][0] && slotsFRow[idx1 + 1] == fourRowPayout[idx2][1] && slotsFRow[idx1 + 2] == fourRowPayout[idx2][2] && slotsFRow[idx1 + 3] == fourRowPayout[idx2][3])
+			{
+				cout << "Match found in row 1!" << endl;
+				slotsMatches++;
+			}
+			if (slotsSRow[idx1] == fourRowPayout[idx2][0] && slotsSRow[idx1 + 1] == fourRowPayout[idx2][1] && slotsSRow[idx1 + 2] == fourRowPayout[idx2][2] && slotsSRow[idx1 + 3] == fourRowPayout[idx2][3])
+			{
+				cout << "Match found in row 2!" << endl;
+				slotsMatches++;
+			}
+			if (slotsTRow[idx1] == fourRowPayout[idx2][0] && slotsTRow[idx1 + 1] == fourRowPayout[idx2][1] && slotsTRow[idx1 + 2] == fourRowPayout[idx2][2] && slotsTRow[idx1 + 3] == fourRowPayout[idx2][3])
+			{
+				cout << "Match found in row 3!" << endl;
+				slotsMatches++;
+			}
+		}
+	}
+	cout << slotsMatches << " found in your roll!" << endl;
+}
+
+
+void SlotMachine::det5RowWin()
+{
+	short slotsMatches = 0;
+		for (int idx2 = 0; idx2 < 5; idx2++)
+		{
+			if (slotsFRow[0] == fiveRowPayout[idx2][0] && slotsFRow[1] == fiveRowPayout[idx2][1] && slotsFRow[2] == fiveRowPayout[idx2][2]
+				&& slotsFRow[3] == fiveRowPayout[idx2][3] && slotsFRow[4] == fiveRowPayout[idx2][4])
+			{
+				cout << "Match found in row 1!" << endl;
+				slotsMatches++;
+			}
+			if (slotsSRow[0] == fiveRowPayout[idx2][0] && slotsSRow[1] == fiveRowPayout[idx2][1] && slotsSRow[2] == fiveRowPayout[idx2][2]
+				&& slotsSRow[3] == fiveRowPayout[idx2][3] && slotsSRow[4] == fiveRowPayout[idx2][4])
+			{
+				cout << "Match found in row 2!" << endl;
+				slotsMatches++;
+			}
+			if (slotsTRow[0] == fiveRowPayout[idx2][0] && slotsTRow[1] == fiveRowPayout[idx2][1] && slotsTRow[2] == fiveRowPayout[idx2][2]
+				&& slotsTRow[3] == fiveRowPayout[idx2][3] && slotsTRow[4] == fiveRowPayout[idx2][4])
+			{
+				cout << "Match found in row 3!" << endl;
+				slotsMatches++;
+			}
+		}
+	cout << slotsMatches << " found in your roll!" << endl;
 }
