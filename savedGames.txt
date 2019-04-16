@@ -1,0 +1,71 @@
+Player # 1's hand: 14C 8D 
+Player # 2's hand: 9C 9H 
+6S 13H 12S 11S 7D 
+int cardsToDeal[8] = {14C,9C,8D,9H,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 6S,13H,12S,11S,7D}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: Player
+Player # 1's hand: 4S 12D 
+Player # 2's hand: 6H 10D 
+7S 5D 9H 7H 3S 
+int cardsToDeal[8] = {4S,6H,12D,10D,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 7S,5D,9H,7H,3S}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: This_is_not_a_4_of_a_Kind
+Player # 1's hand: 11S 11H 
+Player # 2's hand: 9C 9H 
+5C 5S 12C 9S 14D 
+int cardsToDeal[8] = {11S,9C,11H,9H,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 5C,5S,12C,9S,14D}
+game.DEBUG_sharedHand(sharedHandCards)
+
+
+Player # 1's hand: 3C 12H 
+Player # 2's hand: 3H 11C 
+14D 13D 14C 13H 3D 
+int cardsToDeal[8] = {3C,3H,12H,11C,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 14D,13D,14C,13H,3D}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: Player_2_has_a_Full_House
+Player # 1's hand: 13S 8C 
+Player # 2's hand: 11S 11H 
+13H 5C 10S 14D 8S 
+int cardsToDeal[8] = {13S,11S,8C,11H,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 13H,5C,10S,14D,8S}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: Player2_has_a_full_house
+Player # 1's hand: 7S 12C 
+Player # 2's hand: 11C 14H 
+10D 7H 10C 2C 4S 
+int cardsToDeal[8] = {7S,11C,12C,14H,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 10D,7H,10C,2C,4S}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: Player1_has_a_Full_House
+Player # 1's hand: 6C 14S 
+Player # 2's hand: 8D 9H 
+5H 12S 11D 14C 11C 
+int cardsToDeal[8] = {6C,8D,14S,9H,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 5H,12S,11D,14C,11C}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: Player1_has_a_full_house
+Player # 1's hand: 5H 11D 
+Player # 2's hand: 7S 3C 
+14C 2D 10D 10H 10S 
+int cardsToDeal[8] = {5H,7S,11D,3C,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 14C,2D,10D,10H,10S}
+game.DEBUG_sharedHand(sharedHandCards)
+
+Notes: Both_Players_Have_Full_Houses
+Player # 1's hand: 8S 12S 
+Player # 2's hand: 13D 7C 
+3S 11H 14D 12D 3C 
+int cardsToDeal[8] = {8S,13D,12S,7C,}
+game.DEBUG_dealCards(cardsToDeal)int sharedHandCards[10] = { 3S,11H,14D,12D,3C}
+game.DEBUG_sharedHand(sharedHandCards)
+
