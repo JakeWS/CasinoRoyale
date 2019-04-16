@@ -8,9 +8,15 @@ using namespace std;
 deckClass::deckClass()
 {
 	short cardValue = 0;
-	for(int i = 0; i < 52; i++){
-		this->deck.push_back(card((i % 13) + 2, (short)(i/13))%4);
-	}
+	for(int i = 0; i < 1*52/4; i++)
+		this->deck.push_back(card((i) + 2, 'H'));
+	for(int i = 1*52/4; i < 2*52/4; i++)
+		this->deck.push_back(card((i-14*1) + 3, 'C'));
+	for(int i = 2*52/4; i < 3*52/4; i++)
+		this->deck.push_back(card((i-14*2) + 4, 'D'));
+	for(int i = 3*52/4; i < 4*52/4; i++)
+		this->deck.push_back(card((i-14*3) + 5, 'S'));
+	
 }
 
 void deckClass::printDeck()

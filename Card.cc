@@ -5,17 +5,28 @@ using namespace std;
 
 card::card()
 {
-	cout<<"Constructing card"<<endl;
+	//cout<<"Constructing card"<<endl;
 	this->cardValue = 1;
 	this->suit = 1;
 }
 
-card::card(short setValue, short setSuit)
+card::card(short setValue, char setSuit)
 {
 	//cout<<"Constructing card"<<endl;
 	this->cardValue = setValue;
-	this->suit = setSuit;
+	switch (setSuit)
+	{
+		case 'h': this->suit = 0; break;
+		case 'H': this->suit = 0; break;
+		case 'c': this->suit = 1; break;
+		case 'C': this->suit = 1; break;
+		case 'd': this->suit = 2; break;
+		case 'D': this->suit = 2; break;
+		case 's': this->suit = 3; break;
+		case 'S': this->suit = 3; break;
+	}
 }
+
 /*
 card::~card()
 {

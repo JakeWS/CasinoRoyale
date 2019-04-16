@@ -9,7 +9,7 @@ class card{
 	public:
 		card();
 		//~card();
-		card(short, short);
+		card(short, char);
 		short getValue(void);
 		std::string getSuit(void);
 };
