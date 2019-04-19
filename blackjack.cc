@@ -107,9 +107,9 @@ void BlackJack::detWin()
 
   if(cardTotal == 21) // if player has a winning hand (21)
   {
-    std::std::cout<<"Congradulations!! You win!"<<std::std::endl;
+    std::cout<<"Congradulations!! You win!"<<std::endl;
     std::cout<<"What would you like to do now?"<<std::endl<<"0. Exit"<<std::endl<<"1. Play Again"<<std::endl;
-    std::std::cin>>userChoice;
+    std::cin>>userChoice;
 
     if(userChoice == 0)
     {
@@ -144,6 +144,7 @@ void BlackJack::Hit()
   card drawPile;
   card dealCards;
   //deals a card
+
 }
 
 // Stay function
