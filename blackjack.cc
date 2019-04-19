@@ -32,7 +32,7 @@ class BlackJack
 //Main Function
 int main()
 {
-  BlackJack newBlackJack();
+  BlackJack newBlackJack;
 }
 
 // BlackJack
