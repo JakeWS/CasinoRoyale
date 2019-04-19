@@ -4,7 +4,6 @@
 #include <cardFunctions.h>
 #include <Deck.cc>
 #include <Deck.h>
-#include <CardTest.cc>
 
 using namespace std;
 
