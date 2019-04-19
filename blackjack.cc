@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Card.cc"
 #include "Card.h"
-#include "cardFunctions.h"
 #include "Deck.cc"
 #include "Deck.h"
 
