@@ -42,12 +42,12 @@ BlackJack::BlackJack()
 // mem alloc.
   while(continueLoop)
   {
-    std::cout<<"What would you like to do?"<<std::endl<<"0. Exit Game."<<std::endl<<"1. Hit."<<std::endl<<"2. Stay."<<std::endl;
-    std::cin>>userChoice;
+     cout<<"What would you like to do?"<< endl<<"0. Exit Game."<< endl<<"1. Hit."<< endl<<"2. Stay."<< endl;
+     cin>>userChoice;
 
     if(userChoice == 0)
     {
-      std::cout<<"Exiting..."<<std::endl;
+       cout<<"Exiting..."<< endl;
       continueLoop = false;
 
     //  make continueloop a method
@@ -64,7 +64,7 @@ BlackJack::BlackJack()
     }
     else
     {
-      std::cout<<"Unable to process, please respond to the prompt again."<<std::endl;
+       cout<<"Unable to process, please respond to the prompt again."<< endl;
     }
   }
 }
@@ -73,7 +73,7 @@ BlackJack::BlackJack()
 // mem alloc.
 BlackJack::~BlackJack()
 {
-  std::cout<<"Leaving the game."<<std::endl;
+   cout<<"Leaving the game."<< endl;
 }
 
 // Sum of cards in hand
@@ -92,7 +92,7 @@ void BlackJack::discardHand()
   card discardPile;
   // ??
   //incomplete
-  std::cout<<"Discarding Hand."<<std::endl;
+   cout<<"Discarding Hand."<< endl;
   // the cards go into the discard pile
 
 
@@ -106,13 +106,13 @@ void BlackJack::detWin()
 
   if(cardTotal == 21) // if player has a winning hand (21)
   {
-    std::cout<<"Congradulations!! You win!"<<std::endl;
-    std::cout<<"What would you like to do now?"<<std::endl<<"0. Exit"<<std::endl<<"1. Play Again"<<std::endl;
-    std::cin>>userChoice;
+     cout<<"Congradulations!! You win!"<< endl;
+     cout<<"What would you like to do now?"<< endl<<"0. Exit"<< endl<<"1. Play Again"<< endl;
+     cin>>userChoice;
 
     if(userChoice == 0)
     {
-      std::cout<<"Exiting..."<<std::endl;
+       cout<<"Exiting..."<< endl;
     }
     else if(userChoice == 1)
     {
@@ -121,13 +121,13 @@ void BlackJack::detWin()
   }
   else if(cardTotal > 21) // if sum of cards is > 21
   {
-    std::cout<<"Sorry, you lose!"<<std::endl;
-    std::cout<<"What would you like to do now?"<<std::endl<<"0. Exit"<<std::endl<<"1. Play Again"<<std::endl;
-    std::cin>>userChoice;
+     cout<<"Sorry, you lose!"<< endl;
+     cout<<"What would you like to do now?"<< endl<<"0. Exit"<< endl<<"1. Play Again"<< endl;
+     cin>>userChoice;
 
     if(userChoice == 0)
     {
-      std::cout<<"Exiting..."<<std::endl;
+       cout<<"Exiting..."<< endl;
     }
     else if(userChoice == 1)
     {
