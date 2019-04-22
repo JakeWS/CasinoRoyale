@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int countPoints(char[10][2], int);
+int countcardTotal(char[10][2], int);
 
 class BlackJack
 {
@@ -144,7 +144,7 @@ void BlackJack::Stay()
 {
   //card userHand;
   short cardTotal;
-  
+
   if(cardTotal > 21)
   {
     cout<<"BUST! You have: "<<cardT
@@ -162,67 +162,67 @@ void BlackJack::Stay()
     }
 }
 
-
-int countPoints(char cards[10][2], int n) /*count points for Blackjack, cards is your array of cards, and n is the number of cards in your hand*/
+/*count cardTotal for Blackjack, cards is your array of cards, and n is the number of cards in your hand*/
+int countCardTotal(char cards[10][2], int n)
 {
-  int points = 0;
+  int cardTotal = 0;
   for (int i=0; i<=n; i++)
   {
     if(cards[i][0] == 'T')
     {
-      points += 10;
+      cardTotal += 10;
     }
     else if(cards[i][0] == 'J')
     {
-      points += 10;
+      cardTotal += 10;
     }
     else if(cards[i][0] == 'Q')
     {
-      points += 10;
+      cardTotal += 10;
     }
     else if(cards[i][0] == 'K')
     {
-      points += 10;
+      cardTotal += 10;
     }
     else if(cards[i][0] == 'A')
     {
-      if(points+11 > 21)
-        points += 1;
+      if(cardTotal+11 > 21)
+        cardTotal += 1;
       else
-        points += 11;
+        cardTotal += 11;
     }
     else if(cards[i][0] == '2')
     {
-      points += 2;
+      cardTotal += 2;
     }
     else if(cards[i][0] == '3')
     {
-      points += 3;
+      cardTotal += 3;
     }
     else if(cards[i][0] == '4')
     {
-      points += 4;
+      cardTotal += 4;
     }
     else if(cards[i][0] == '5')
     {
-      points += 5;
+      cardTotal += 5;
     }
     else if(cards[i][0] == '6')
     {
-      points += 6;
+      cardTotal += 6;
     }
     else if(cards[i][0] == '7')
     {
-      points += 7;
+      cardTotal += 7;
     }
     else if(cards[i][0] == '8')
     {
-      points += 8;
+      cardTotal += 8;
     }
     else if(cards[i][0] == '9')
     {
-      points += 9;
+      cardTotal += 9;
     }
   }
-  return points;
+  return cardTotal;
 }
