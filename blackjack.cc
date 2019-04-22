@@ -6,6 +6,8 @@
 
 using namespace std;
 
+int countPoints(char[10][2], int);
+
 class BlackJack
 {
   private:
@@ -76,15 +78,6 @@ BlackJack::~BlackJack()
    cout<<"Leaving the game."<< endl;
 }
 
-// Sum of cards in hand
-void BlackJack::countHand()
-{
-  short cardTotal;
-  card userHand;
-
-
-
-}
 
 // Player discards hand
 void BlackJack::discardHand()
@@ -102,7 +95,7 @@ void BlackJack::discardHand()
 void BlackJack::detWin()
 {
   // if cardTotal = 21 then yay u win
-  short cardTotoal;
+  short cardTotal;
 
   if(cardTotal == 21) // if player has a winning hand (21)
   {
@@ -149,7 +142,87 @@ void BlackJack::Hit()
 // Stay function
 void BlackJack::Stay()
 {
-  card userHand;
+  //card userHand;
   short cardTotal;
-  // doesnt deal a card
+  
+  if(cardTotal > 21)
+  {
+    cout<<"BUST! You have: "<<cardT
+      otal<<endl;
+    cout<<"What would you like to do now?"<< endl<<"0. Exit"<< endl<<"1. Play Again"<< endl;
+    cin>>userChoice;
+
+    if(userChoice == 0)
+    {
+       cout<<"Exiting..."<< endl;
+    }
+    else if(userChoice == 1)
+    {
+      BlackJack();  // starts a new game
+    }
+}
+
+
+int countPoints(char cards[10][2], int n) /*count points for Blackjack, cards is your array of cards, and n is the number of cards in your hand*/
+{
+  int points = 0;
+  for (int i=0; i<=n; i++)
+  {
+    if(cards[i][0] == 'T')
+    {
+      points += 10;
+    }
+    else if(cards[i][0] == 'J')
+    {
+      points += 10;
+    }
+    else if(cards[i][0] == 'Q')
+    {
+      points += 10;
+    }
+    else if(cards[i][0] == 'K')
+    {
+      points += 10;
+    }
+    else if(cards[i][0] == 'A')
+    {
+      if(points+11 > 21)
+        points += 1;
+      else
+        points += 11;
+    }
+    else if(cards[i][0] == '2')
+    {
+      points += 2;
+    }
+    else if(cards[i][0] == '3')
+    {
+      points += 3;
+    }
+    else if(cards[i][0] == '4')
+    {
+      points += 4;
+    }
+    else if(cards[i][0] == '5')
+    {
+      points += 5;
+    }
+    else if(cards[i][0] == '6')
+    {
+      points += 6;
+    }
+    else if(cards[i][0] == '7')
+    {
+      points += 7;
+    }
+    else if(cards[i][0] == '8')
+    {
+      points += 8;
+    }
+    else if(cards[i][0] == '9')
+    {
+      points += 9;
+    }
+  }
+  return points;
 }
