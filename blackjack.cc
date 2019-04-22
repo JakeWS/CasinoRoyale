@@ -123,15 +123,21 @@ void BlackJack::Hit()
   card dealCards;
   //deals a card
 
+  do{
+    countHand();
+    cout<<"You have: "<<cardTotal<<"What would you like to do now?"<<<"1. Hit."<< endl<<"2. Stay."<< endl;
+
+  }while(userChoice == 1)
+
 }
 
 // Stay function
-void BlackJack::Stay()
+void BlackJack::Stay()  //If user stays, they will be dealt no cards and it will state their card total.
 {
   //card userHand;
   short cardTotal;
 
-  if(cardTotal > 21)
+  if(cardTotal > 21)  // If card total is greater than 21, the player busts
   {
     cout<<"BUST! You have: "<<cardTotal<<endl;
     cout<<"What would you like to do now?"<< endl<<"0. Exit"<< endl<<"1. Play Again"<< endl;
@@ -145,6 +151,11 @@ void BlackJack::Stay()
     {
       BlackJack();  // starts a new game
     }
+  }
+  else(cardTotal < 21)  // If card total is less than 21, just print out amount
+  {
+    cout<<"You have: "<<cardTotal<<endl;
+  }
 }
 
 /*count cardTotal for Blackjack, cards is your array of cards, and n is the number of cards in your hand*/
