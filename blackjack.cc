@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int countcardTotal(char[10][2], int);
+// int countcardTotal(char[10][2], int);
 
 class BlackJack
 {
