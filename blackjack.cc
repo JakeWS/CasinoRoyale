@@ -13,21 +13,19 @@ class BlackJack
   private:
 
   public:
-    BlackJack();        // Blackjack constructor
-    ~BlackJack();       // Blackjack destructor
-    bool userChoice;    // Hit or stay (?)
-    short cardTotal;    // stored value of the hand
-    card userHand;      // Users cards (2 cards to start) [should be able to hold an infinite amount of cards]
-    card dealerHand;    // Dealers cards (2 cards) [should be able to hold an infinite amount of cards]
-    card discardPile;   // Discard pile
-    card drawPile;      // Gives user 1 card when they hit
-    card shuffleDeck;   // Shuffles deck
-    card dealCards;     // Deals cards (2 cards per person [user/dealer])
-    void countHand();   // Sum of the two cards in userHand; uses/is sent to cardTotal
-    void discardHand(); // When user decides to discard/'fold'(?)
-    void detWin();      // Uses cardTotal, checks if hand is == 21, then it's a winning hand
-    void Hit();         // Hit means "give me more cards"
-    void Stay();        // Stay means "i am done, give me no more cards"
+    BlackJack();         // Blackjack constructor
+    ~BlackJack();        // Blackjack destructor
+    bool userChoice;     // Hit or stay (?)
+    short cardTotal;     // stored value of the hand
+    card userHand;       // Users cards (2 cards to start) [should be able to hold an infinite amount of cards]
+    card discardPile;    // Discard pile
+    card drawPile;       // Gives user 1 card when they hit
+    card shuffleDeck;    // Shuffles deck
+    card dealCards;      // Deals cards (2 cards per person [user/dealer])
+    void countHand();    // count cardTotal for Blackjack
+    void detWin();       // Uses cardTotal, checks if hand is == 21, then it's a winning hand
+    void Hit();          // Hit means "give me more cards"
+    void Stay();         // Stay means "i am done, give me no more cards"
 };
 
 //Main Function
@@ -78,18 +76,6 @@ BlackJack::~BlackJack()
    cout<<"Leaving the game."<< endl;
 }
 
-
-// Player discards hand
-void BlackJack::discardHand()
-{
-  card discardPile;
-  // ??
-  //incomplete
-   cout<<"Discarding Hand."<< endl;
-  // the cards go into the discard pile
-
-
-}
 
 // Determine a win (cardTotal == 21)
 void BlackJack::detWin()
@@ -147,8 +133,7 @@ void BlackJack::Stay()
 
   if(cardTotal > 21)
   {
-    cout<<"BUST! You have: "<<cardT
-      otal<<endl;
+    cout<<"BUST! You have: "<<cardTotal<<endl;
     cout<<"What would you like to do now?"<< endl<<"0. Exit"<< endl<<"1. Play Again"<< endl;
     cin>>userChoice;
 
@@ -163,7 +148,7 @@ void BlackJack::Stay()
 }
 
 /*count cardTotal for Blackjack, cards is your array of cards, and n is the number of cards in your hand*/
-int countCardTotal(char cards[10][2], int n)
+int countHand(char cards[10][2], int n)
 {
   int cardTotal = 0;
   for (int i=0; i<=n; i++)
