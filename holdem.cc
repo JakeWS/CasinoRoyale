@@ -25,21 +25,21 @@ void holdem::DEBUG_dealCards(int newCardsVector[8], vector<holdemPlayer> &player
 	for (int i = 0; i < this->numPlayers*4; i += 2)
 	{
 		card newCard(newCardsVector[i], newCardsVector[i + 1]);
-		players[(i/2)%this->numPlayers].hand[(i/2) / this->numPlayers] = newCard;
+		players[(i / 2) % this->numPlayers].hand[(i / 2) / this->numPlayers] = newCard;
 	}
 }
 
-void holdem::DEBUG_FILE_dealCards(int newCardsVector[2], vector<holdemPlayer> &players)
+void holdem::DEBUG_FILE_dealCards(int newCardsVector[4], vector<holdemPlayer> &players)
 {
-	for (int i = 0; i < this->numPlayers*4; i += 2)
-	{
-		card newCard(newCardsVector[i], newCardsVector[i + 1]);
-		players[(i/2)%this->numPlayers].hand[(i/2) / this->numPlayers] = newCard;
-	}
+	card newCard1(newCardsVector[0], newCardsVector[1]);
+	players[0].hand[0] = newCard1;
+	card newCard2(newCardsVector[2], newCardsVector[3]);
+	players[0].hand[1] = newCard2;
 }
 
 void holdem::DEBUG_sharedHand(int newCardsVector[10])
 {
+	this->sharedHand.clear();
 	for (int i = 0; i < 10; i += 2)
 	{
 		card tempCard(newCardsVector[i], newCardsVector[i + 1]);
@@ -86,7 +86,7 @@ void holdem::river()
 	this->sharedHand.push_back(this->deck.popCard());
 }
 
-void holdem::findWinner(vector<holdemPlayer> players)
+int holdem::findWinner(vector<holdemPlayer> players)
 {
 		
 	holdemPlayer currentWinner;
@@ -141,21 +141,21 @@ void holdem::findWinner(vector<holdemPlayer> players)
 		}
 	}
 	//Check Two Pair (2)
-	if(1)
+	if (1)
 	{
 		unsigned short highestValue = 0;
-		for(int playerIt = 0; playerIt < this->numPlayers; playerIt++)
+		for (int playerIt = 0; playerIt < this->numPlayers; playerIt++) //Loop through all players
 		{
-			for (int handCardIt = 0; handCardIt < 2; handCardIt++)
+			for (int handCardIt = 0; handCardIt < 2; handCardIt++) //Loop through all hand cards
 			{
-				for (int sharedCardIt = 0; sharedCardIt < 5; sharedCardIt++)
+				//Pair in the hand, Pair in the pool
+				if (players[playerIt].hand[0].getValue() == players[playerIt].hand[1].getValue()) //Pair in the hand
 				{
-					//Pair in the hand, Pair in the pool
-					if (players[playerIt].hand[0].getValue() == players[playerIt].hand[1].getValue()) //Pair in the hand
+					for (int sharedCardIt = 0; sharedCardIt < 5; sharedCardIt++) //Loop through all pool cards
 					{
-						for (int poolCard = 0; poolCard < 3; poolCard++)
+						for (int poolCard = 1; poolCard < 4; poolCard++)
 						{
-							if (this->sharedHand[(sharedCardIt + 1) % 5].getValue() == this->sharedHand[(sharedCardIt + poolCard) % 5].getValue()//Pair in the pool
+							if (this->sharedHand[(sharedCardIt) % 5].getValue() == this->sharedHand[(sharedCardIt + poolCard) % 5].getValue()//Pair in the pool
 								&& players[playerIt].hand[handCardIt].getValue() > highestValue)
 							{
 								highestValue = this->sharedHand[sharedCardIt].getValue();
@@ -164,23 +164,29 @@ void holdem::findWinner(vector<holdemPlayer> players)
 							}
 						}
 					}
-
+				}
+				//NOT FINISHED
+				/*for (int sharedCardIt = 0; sharedCardIt < 5; sharedCardIt++) //Loop through all pool cards
+				{
 					//One card in hand paired with one in the pool, one pair in the pool
 					//This will break if 2 players have the largest pair in their hands with the same value
 					if (players[playerIt].hand[handCardIt].getValue() == this->sharedHand[sharedCardIt].getValue()
 						&& players[playerIt].hand[handCardIt].getValue() > highestValue) //Pair with one card in hand, another in the pool
 					{
-						for (int poolCard = 0; poolCard < 3; poolCard++)
+						for (int poolCard1 = 1; poolCard1 < 4; poolCard1++)
 						{
-							if (this->sharedHand[(sharedCardIt+1) % 5].getValue() == this->sharedHand[(sharedCardIt + poolCard) % 5].getValue())//Pair in the pool
+							for (int poolCard2 = poolCard1 + 1; poolCard2 < 3; poolCard2++)
 							{
-								highestValue = this->sharedHand[sharedCardIt].getValue();
-								currentWinner = players[playerIt];
-								winningHand = 2;
+								if (this->sharedHand[(sharedCardIt + poolCard1) % 5].getValue() == this->sharedHand[(poolCard1 + poolCard2) % 5].getValue())//Pair in the pool
+								{
+									highestValue = this->sharedHand[sharedCardIt].getValue();
+									currentWinner = players[playerIt];
+									winningHand = 2;
+								}
 							}
 						}
 					}
-				}
+				}*/
 			}
 		}
 	}
@@ -292,8 +298,8 @@ void holdem::findWinner(vector<holdemPlayer> players)
 						vector<short> handCardValues;
 						//Grab 3 from the pool
 						cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
-						cardValues.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getValue());
-						cardValues.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getValue());
+						cardValues.push_back(this->sharedHand[(sharedHandIt + poolIt) % 5].getValue());
+						cardValues.push_back(this->sharedHand[(sharedHandIt + k) % 5].getValue());
 						//Grab the 2 from the hand
 						cardValues.push_back(players[playerIt].hand[0].getValue());
 						cardValues.push_back(players[playerIt].hand[1].getValue());
@@ -384,32 +390,32 @@ void holdem::findWinner(vector<holdemPlayer> players)
 		for (int playerIt = 0; playerIt < this->numPlayers; playerIt++)
 		{
 			//cout << "New Player" << endl;
-			//One card in hand, 4 others in pool
+			//The pair is split from the hand card and the pool, three of a kind all in pool
 			for (int handIt = 0; handIt < 2; handIt++)
 			{
 				for (int sharedHandIt = 0; sharedHandIt < 5; sharedHandIt++)
 				{
-					vector<char> cardSuits;
+					vector<char> cardValues;
 					//Grab 4 from the pool
-					cardSuits.push_back(this->sharedHand[sharedHandIt].getSuit()[0]);
-					cardSuits.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getSuit()[0]);
-					cardSuits.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getSuit()[0]);
-					cardSuits.push_back(this->sharedHand[(sharedHandIt + 3) % 5].getSuit()[0]);
+					cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
+					cardValues.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getValue());
+					cardValues.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getValue());
+					cardValues.push_back(this->sharedHand[(sharedHandIt + 3) % 5].getValue());
 					//Grab the 1 from the hand
-					cardSuits.push_back(players[playerIt].hand[handIt].getSuit()[0]);
-					short handCardValue;
-					handCardValue = players[playerIt].hand[handIt].getValue();
+					cardValues.push_back(players[playerIt].hand[handIt].getValue());
+					//short handCardValue;
+					//handCardValue = players[playerIt].hand[handIt].getValue();
 
 					//Pairing card is 1 ahead of the "base card"
 					for (int i = 0; i < 5; i++)
 					{
-						if (cardSuits[i] == cardSuits[(i + 1) % 5]) //Pair
+						if (cardValues[i] == cardValues[(i + 1) % 5]) //Pair
 						{
-							if (cardSuits[(i + 2) % 5] == cardSuits[(i + 3) % 5]
-								&& cardSuits[(i + 2) % 5] == cardSuits[(i + 4) % 5]
-								&& handCardValue > highestValue) //3 of a kind
+							if (cardValues[(i + 2) % 5] == cardValues[(i + 3) % 5]
+								&& cardValues[(i + 2) % 5] == cardValues[(i + 4) % 5]
+								&& cardValues[i] > highestValue) //3 of a kind
 							{
-								highestValue = handCardValue;
+								highestValue = cardValues[i];
 								currentWinner = players[playerIt];
 								winningHand = 6;
 								//cout << "Win Condition 1" << endl;
@@ -420,13 +426,13 @@ void holdem::findWinner(vector<holdemPlayer> players)
 					//Pairing card is 2 ahead of the "base card"
 					for (int i = 0; i < 5; i++)
 					{
-						if (cardSuits[i] == cardSuits[(i + 2) % 5]) //Pair
+						if (cardValues[i] == cardValues[(i + 2) % 5]) //Pair
 						{
-							if (cardSuits[(i + 1) % 5] == cardSuits[(i + 3) % 5]
-								&& cardSuits[(i + 1) % 5] == cardSuits[(i + 4) % 5]
-								&& handCardValue > highestValue) //3 of a kind
+							if (cardValues[(i + 1) % 5] == cardValues[(i + 3) % 5]
+								&& cardValues[(i + 1) % 5] == cardValues[(i + 4) % 5]
+								&& cardValues[i] > highestValue) //3 of a kind
 							{
-								highestValue = handCardValue;
+								highestValue = cardValues[i];
 								currentWinner = players[playerIt];
 								winningHand = 6;
 								//cout << "Win Condition 2" << endl;
@@ -437,36 +443,68 @@ void holdem::findWinner(vector<holdemPlayer> players)
 			}
 
 
-			//Two cards in hand, 3 others in pool
+			//The pair is in the hand, three of a kind all in pool
 			for (int sharedHandIt = 0; sharedHandIt < 3; sharedHandIt++)
 			{
 				for (int poolIt = sharedHandIt + 1; poolIt < 4; poolIt++)
 				{
 					for (int k = poolIt + 1; k < 5; k++)
 					{
-						vector<char> cardSuits;
 						vector<short> cardValues;
 						//Grab 3 from the pool
-						cardSuits.push_back(this->sharedHand[sharedHandIt].getSuit()[0]);
-						cardSuits.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getSuit()[0]);
-						cardSuits.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getSuit()[0]);
+						cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
+						cardValues.push_back(this->sharedHand[(sharedHandIt + poolIt) % 5].getValue());
+						cardValues.push_back(this->sharedHand[(sharedHandIt + k) % 5].getValue());
 						//Grab the 2 from the hand
-						cardSuits.push_back(players[playerIt].hand[0].getSuit()[0]);
-						cardSuits.push_back(players[playerIt].hand[1].getSuit()[0]);
 						cardValues.push_back(players[playerIt].hand[0].getValue());
 						cardValues.push_back(players[playerIt].hand[1].getValue());
 
-						if (cardSuits[0] == cardSuits[1] - 1
-							&& cardSuits[1] == cardSuits[2] - 1
-							&& cardSuits[2] == cardSuits[3] - 1
-							&& cardSuits[3] == cardSuits[4] - 1
-							&& *max_element(cardValues.begin(), cardValues.end()) > highestValue)
+
+						//Pairing card is 1 ahead of the "base card"
+						for (int i = 0; i < 5; i++)
 						{
-							highestValue = *max_element(cardValues.begin(), cardValues.end());
+							if (cardValues[i] == cardValues[(i + 1) % 5]) //Pair
+							{
+								if (cardValues[(i + 2) % 5] == cardValues[(i + 3) % 5]
+									&& cardValues[(i + 2) % 5] == cardValues[(i + 4) % 5]
+									&& cardValues[i] > highestValue) //3 of a kind
+								{
+									highestValue = cardValues[i];
+									currentWinner = players[playerIt];
+									winningHand = 6;
+									//cout << "Win Condition 1" << endl;
+								}
+							}
+						}
+
+						//Pairing card is 2 ahead of the "base card"
+						for (int i = 0; i < 5; i++)
+						{
+							if (cardValues[i] == cardValues[(i + 2) % 5]) //Pair
+							{
+								if (cardValues[(i + 1) % 5] == cardValues[(i + 3) % 5]
+									&& cardValues[(i + 1) % 5] == cardValues[(i + 4) % 5]
+									&& cardValues[i] > highestValue) //3 of a kind
+								{
+									highestValue = cardValues[i];
+									currentWinner = players[playerIt];
+									winningHand = 6;
+									//cout << "Win Condition 2" << endl;
+								}
+							}
+						}
+						/*
+						if (threeOfAKind[0] == threeOfAKind[1]
+						 && threeOfAKind[1] == threeOfAKind[2]
+						 && handPair[0] == handPair[1]
+						 && handPair[0] > highestValue)
+						{
+							highestValue = handPair[0];
 							currentWinner = players[playerIt];
 							winningHand = 6;
 							//cout << "Win Condition 3" << endl;
 						}
+						*/
 					}
 				}
 			}
@@ -487,7 +525,7 @@ void holdem::findWinner(vector<holdemPlayer> players)
 				 {
 					for (int sharedCardIt = 0; sharedCardIt < 4; sharedCardIt++)
 					{
-						for(int poolIt = sharedCardIt; poolIt < 5; poolIt++)
+						for(int poolIt = sharedCardIt + 1; poolIt < 5; poolIt++)
 						{
 							if(this->sharedHand[sharedCardIt].getValue() == this->sharedHand[poolIt].getValue()) //There is a pair in the pool
 							{
@@ -506,7 +544,7 @@ void holdem::findWinner(vector<holdemPlayer> players)
 				{
 					if (players[playerIt].hand[handCardIt].getValue() == this->sharedHand[sharedCardIt].getValue()) //Pair with one card in hand, another in the pool
 					{
-						for (int i = sharedCardIt+1; i < 4; i++)
+						for (int i = sharedCardIt + 1; i < 4; i++)
 						{
 							for (int j = i + 1; j < 5; j++)
 							{
@@ -563,14 +601,13 @@ void holdem::findWinner(vector<holdemPlayer> players)
 							{
 								for (int poolIt = sharedHandIt + 1; poolIt < 4; poolIt++)
 								{
-									for (int k = poolIt + 1; k < 5; k++)
+									for (int h = poolIt + 1; h < 5; h++)
 									{
 										vector<short> cardValues;
-										vector<short> handCardValues;
 										//Grab 3 from the pool
 										cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
-										cardValues.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getValue());
-										cardValues.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getValue());
+										cardValues.push_back(this->sharedHand[(sharedHandIt + poolIt) % 5].getValue());
+										cardValues.push_back(this->sharedHand[(sharedHandIt + h) % 5].getValue());
 										//Grab the 2 from the hand
 										cardValues.push_back(players[playerIt].hand[0].getValue());
 										cardValues.push_back(players[playerIt].hand[1].getValue());
@@ -638,71 +675,112 @@ void holdem::findWinner(vector<holdemPlayer> players)
 		}
 	}
 	//Check Royal Flush (9)
+	//This isn't checking for a flush
 	if (1)
 	{
 		unsigned short highestValue = 0;
 		for (int playerIt = 0; playerIt < this->numPlayers; playerIt++)
 		{
-			//One card in hand, 4 others in pool
-			for (int handIt = 0; handIt < 2; handIt++)
-			{
-				for (int sharedHandIt = 0; sharedHandIt < 5; sharedHandIt++)
-				{
-					vector<short> cardValues;
-					//Grab 4 from the pool
-					cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
-					cardValues.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getValue());
-					cardValues.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getValue());
-					cardValues.push_back(this->sharedHand[(sharedHandIt + 3) % 5].getValue());
-					//Grab the 1 from the hand
-					cardValues.push_back(players[playerIt].hand[handIt].getValue());
-					sort(cardValues.begin(), cardValues.end());
 
-					if (cardValues[0] == cardValues[1] - 1
-						&& cardValues[1] == cardValues[2] - 1
-						&& cardValues[2] == cardValues[3] - 1
-						&& cardValues[3] == cardValues[4] - 1
-						&& players[playerIt].hand[handIt].getValue() > highestValue
-						&& cardValues.back() == 14)
+			vector<unsigned char> cardSuits;
+			vector<short> handCardValues;
+			cardSuits.push_back(this->sharedHand[0].getSuit()[0]);
+			cardSuits.push_back(this->sharedHand[1].getSuit()[0]);
+			cardSuits.push_back(this->sharedHand[2].getSuit()[0]);
+			cardSuits.push_back(this->sharedHand[3].getSuit()[0]);
+			cardSuits.push_back(this->sharedHand[4].getSuit()[0]);
+
+			handCardValues.push_back(players[playerIt].hand[0].getValue());
+			handCardValues.push_back(players[playerIt].hand[1].getValue());
+
+			//Check both hand cards together against 3 pool cards
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = i + 1; j < 4; j++)
+				{
+					for (int k = j + 1; k < 5; k++)
 					{
-						highestValue = players[playerIt].hand[handIt].getValue();
-						currentWinner = players[playerIt];
-						winningHand = 9;
+						if (players[playerIt].hand[0].getSuit()[0] == players[playerIt].hand[1].getSuit()[0]
+							&& players[playerIt].hand[0].getSuit()[0] == cardSuits[i]
+							&& players[playerIt].hand[0].getSuit()[0] == cardSuits[j]
+							&& players[playerIt].hand[0].getSuit()[0] == cardSuits[k]
+							&& *max_element(handCardValues.begin(), handCardValues.end()) > highestValue)
+						{
+							//There is a flush
+							for (int sharedHandIt = 0; sharedHandIt < 3; sharedHandIt++)
+							{
+								for (int poolIt = sharedHandIt + 1; poolIt < 4; poolIt++)
+								{
+									for (int h = poolIt + 1; h < 5; h++)
+									{
+										vector<short> cardValues;
+										//Grab 3 from the pool
+										cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
+										cardValues.push_back(this->sharedHand[(sharedHandIt + poolIt) % 5].getValue());
+										cardValues.push_back(this->sharedHand[(sharedHandIt + h) % 5].getValue());
+										//Grab the 2 from the hand
+										cardValues.push_back(players[playerIt].hand[0].getValue());
+										cardValues.push_back(players[playerIt].hand[1].getValue());
+										sort(cardValues.begin(), cardValues.end());
+
+										if (cardValues[0] == cardValues[1] - 1
+											&& cardValues[1] == cardValues[2] - 1
+											&& cardValues[2] == cardValues[3] - 1
+											&& cardValues[3] == cardValues[4] - 1
+											&& cardValues[4] == 14
+											&& *max_element(handCardValues.begin(), handCardValues.end()) > highestValue)
+										{
+											//There is a straight flush
+											highestValue = *max_element(handCardValues.begin(), handCardValues.end());
+											currentWinner = players[playerIt];
+											winningHand = 9;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
-			//Two cards in hand, 3 others in pool
-			for (int sharedHandIt = 0; sharedHandIt < 3; sharedHandIt++)
+
+			//Check both hand cards independently against 4 pool cards
+			for (int handIt = 0; handIt < 2; handIt++)
 			{
-				for (int poolIt = sharedHandIt + 1; poolIt < 4; poolIt++)
+				for (int i = 0; i < 5; i++)
 				{
-					for (int k = poolIt + 1; k < 5; k++)
+					if (players[playerIt].hand[handIt].getSuit()[0] == cardSuits[(i + 1) % 5]
+						&& players[playerIt].hand[handIt].getSuit()[0] == cardSuits[(i + 2) % 5]
+						&& players[playerIt].hand[handIt].getSuit()[0] == cardSuits[(i + 3) % 5]
+						&& players[playerIt].hand[handIt].getSuit()[0] == cardSuits[(i + 4) % 5]
+						&& handCardValues[handIt] > highestValue)
 					{
-						vector<short> cardValues;
-						vector<short> handCardValues;
-						//Grab 3 from the pool
-						cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
-						cardValues.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getValue());
-						cardValues.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getValue());
-						//Grab the 2 from the hand
-						cardValues.push_back(players[playerIt].hand[0].getValue());
-						cardValues.push_back(players[playerIt].hand[1].getValue());
-						sort(cardValues.begin(), cardValues.end());
-
-						handCardValues.push_back(players[playerIt].hand[0].getValue());
-						handCardValues.push_back(players[playerIt].hand[1].getValue());
-
-						if (cardValues[0] == cardValues[1] - 1
-							&& cardValues[1] == cardValues[2] - 1
-							&& cardValues[2] == cardValues[3] - 1
-							&& cardValues[3] == cardValues[4] - 1
-							&& *max_element(handCardValues.begin(), handCardValues.end()) > highestValue
-							&& cardValues.back() == 14)
+						//There is a flush
+						for (int sharedHandIt = 0; sharedHandIt < 5; sharedHandIt++)
 						{
-							highestValue = *max_element(handCardValues.begin(), handCardValues.end());
-							currentWinner = players[playerIt];
-							winningHand = 9;
+							vector<short> cardValues;
+							//Grab 4 from the pool
+							cardValues.push_back(this->sharedHand[sharedHandIt].getValue());
+							cardValues.push_back(this->sharedHand[(sharedHandIt + 1) % 5].getValue());
+							cardValues.push_back(this->sharedHand[(sharedHandIt + 2) % 5].getValue());
+							cardValues.push_back(this->sharedHand[(sharedHandIt + 3) % 5].getValue());
+							//Grab the 1 from the hand
+							cardValues.push_back(players[playerIt].hand[handIt].getValue());
+							sort(cardValues.begin(), cardValues.end());
+
+							if (cardValues[0] == cardValues[1] - 1
+								&& cardValues[1] == cardValues[2] - 1
+								&& cardValues[2] == cardValues[3] - 1
+								&& cardValues[3] == cardValues[4] - 1
+								&& cardValues[4] == 14
+								&& handCardValues[handIt] > highestValue)
+							{
+								//There is a straight flush
+								highestValue = cardValues.back();
+								currentWinner = players[playerIt];
+								winningHand = 9;
+							}
 						}
+
 					}
 				}
 			}
@@ -710,6 +788,7 @@ void holdem::findWinner(vector<holdemPlayer> players)
 	}
 
 	cout << "Winning player: " << currentWinner.getID() << " with a ";
+	
 	switch (winningHand) {
 	case 0: cout << "High Card"; break;
 	case 1: cout << "One Pair"; break;
@@ -724,6 +803,7 @@ void holdem::findWinner(vector<holdemPlayer> players)
 	}
 	cout << endl;
 	
+	return winningHand;
 }
 
 

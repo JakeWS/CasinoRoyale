@@ -1,3 +1,204 @@
+//Notes on this test file:
+//All lines with "//" at the beginning will not be read by the test driver.
+//These test cases are designed to cover all possible combinations of hands with only one player, without pestaside paradoxing
+
+//High card (0)
+//High card is first in hand
+5 C 2 D
+9 S 13 H 12 S 11 S 7 D
+0
+
+//High card is second in hand
+3 C 6 D
+9 S 13 H 12 S 11 S 7 D
+0
+
+////One pair (1)
+////Pair in hand
+//5 C 5 D
+//9 S 13 H 12 S 11 S 7 D
+//1
+//
+////Pair w/ first card in hand, one card in pool
+//7 C 2 D
+//9 S 13 H 12 S 11 S 7 D
+//1
+//
+////Pair w/ second card in hand, one card in pool
+//2 C 9 D
+//9 S 13 H 12 S 11 S 7 D
+//1
+//
+//
+////Two pair (2)
+////Pair in hand, another pair in pool
+//7 C 7 D
+//9 S 13 H 12 S 11 S 9 D
+//2
+//
+////Pair w/ first card in hand, one card in pool, and another pair in pool
+//7 C 5 D
+//9 S 7 H 12 S 11 S 9 D
+//2
+//
+////Pair w/ second card in hand, one card in pool, and another pair in pool
+//4 C 12 D
+//9 S 7 H 12 S 11 S 9 D
+//2
+//
+
+//Three of a kind (3)
+//Pair in hand, matching card in pool
+7 C 7 D
+8 S 7 H 12 S 11 S 9 D
+3
+
+//Pair in pool, matching card is first in hand
+7 C 3 D
+9 S 7 H 12 S 11 S 7 D
+3
+
+//Pair in pool, matching card is second in hand
+5 C 7 D
+9 S 7 H 12 S 11 S 7 D
+3
+
+
+//Straight (4)
+//2 of the straight-making cards come from the hand
+5 C 7 D
+6 S 8 H 12 S 11 S 4 D
+4
+
+//1 of the straight-making cards comes from the first hand card
+5 C 2 D
+6 S 8 H 7 S 11 S 4 D
+4
+
+//1 of the straight-making cards comes from the first hand card
+14 C 4 D
+6 S 8 H 7 S 11 S 5 D
+4
+
+
+//Flush (5)
+//2 Flush-making cards come from the hand, another 3 from the pool
+14 D 2 D
+6 D 11 H 7 S 11 D 5 D
+5
+
+//1 Flush-making card comes from the first hand card, another 4 from the pool
+14 D 2 S
+6 D 11 D 7 S 11 D 5 D
+5
+
+//1 Flush-making card comes from the first hand card, another 4 from the pool
+14 C 2 D
+6 D 11 D 7 S 11 D 5 D
+5
+
+
+//Full House (6)
+//The pair is in the hand, three of a kind all in pool
+14 C 14 D
+7 S 8 H 7 S 7 S 5 D
+6
+
+//The pair is split from the first hand card and the pool, three of a kind all in pool
+14 C 9 D
+14 S 8 H 7 S 7 S 7 D
+6
+
+//The pair is split from the second hand card and the pool, three of a kind all in pool
+8 C 14 D
+14 S 8 H 7 S 7 S 7 D
+6
+
+//The pair is split from the first hand card and the pool, three of a kind from other hand card and 2 from the pool
+8 C 14 D
+14 S 8 H 14 S 5 S 7 D
+6
+
+//The pair is split from the second hand card and the pool, three of a kind from other hand card and 2 from the pool
 14 C 8 D
-9 C 9 H
-6 S 13 H 12 S 11 S 7 D
+14 S 8 H 14 S 5 S 7 D
+6
+
+//The pair is in the pool, three of a kind is split between 2 cards in hand and 1 card in the pool
+8 C 8 D
+14 S 8 H 14 S 5 S 7 D
+6
+
+//The pair is in the pool, three of a kind is split between the first hand card and 2 cards in the pool
+8 C 4 D
+14 S 8 H 14 S 5 S 8 D
+6
+
+//The pair is in the pool, three of a kind is split between the second hand card and 2 cards in the pool
+3 C 8 D
+14 S 8 H 14 S 5 S 8 D
+6
+
+
+//Four of a kind (7)
+//Pair in the hand, matching pair in the pool
+8 C 8 D
+14 S 8 H 8 S 5 S 7 D
+7
+
+//Pair from one card in the hand with one in the pool, a matching 3 of a kind in the pool, matching from first card in hand
+8 C 4 D
+14 S 8 H 8 S 8 S 7 D
+7
+
+//Pair from one card in the hand with one in the pool, a matching 3 of a kind in the pool, matching from second card in hand
+3 C 8 D
+14 S 8 H 8 S 8 S 7 D
+7
+
+
+//Straight-Flush (8)
+//2 cards come from the hand, another 3 from the pool
+6 D 4 D
+5 D 13 D 8 D 8 S 7 D
+8
+
+//1 card comes from the first hand card, another 4 from the pool
+6 D 2 H
+5 D 4 D 8 D 8 S 7 D
+8
+
+//1 card comes from the second hand card, another 4 from the pool
+2 H 6 D
+5 D 4 D 8 D 8 S 7 D
+8
+
+//1 card comes from the second hand card, another 4 from the pool
+2 H 6 D
+5 D 4 D 8 D 8 S 7 D
+8
+
+//Royal Flush (9)
+//2 cards come from the hand, another 3 from the pool
+14 D 13 D
+12 D 11 D 8 H 8 S 10 D
+9
+
+//1 card comes from the first hand card, another 4 from the pool
+14 D 7 D
+12 D 11 D 13 D 8 S 10 D
+9
+
+//1 card comes from the second hand card, another 4 from the pool
+7 D 14 D
+12 D 11 D 13 D 8 S 10 D
+9
+
+
+//Random or previously error-throwing games
+10 C 8 D
+9 S 13 H 12 S 11 S 7 D
+4
+10 C 4 D
+9 S 10 H 12 S 11 S 7 D
+1

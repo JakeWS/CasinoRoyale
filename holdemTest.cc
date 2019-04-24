@@ -4,11 +4,12 @@
 #include "holdemPlayer.h"
 #include <sstream>
 #include <fstream>
+#include <assert.h>
 using namespace std;
 
 int main(int argc, char* argv[]){
 	std::vector<holdemPlayer> players;
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 1; i++) {
 		holdemPlayer tempPlayer;
 		players.push_back(tempPlayer);
 	}
@@ -26,46 +27,93 @@ int main(int argc, char* argv[]){
 		string line;
 		if (inputFile.is_open())
 		{
-			int cardsToDeal[8];
+			int cardsToDeal[4];
 			int sharedHandCards[10];
-			while (getline(inputFile, line))
+			int i = 0;
+			while (getline(inputFile, line)) // Loop to get a new line
 			{
-				int i = 0;
-				char * pch;
-				//istringstream(line.substr(0, line.find(delimiter))) >> i;
-				//cardsToDeal[0] = istringstream(line.substr(0, line.find(delimiter)));
-				//const char * tempLineChar = line.c_str();
+				if ((line[0] == '/' && line[1] == '/')
+				  || line[0] == '\r')
+					continue;
+				char *pch;
 				char *lineChar = new char[line.length() + 1];
 				strcpy(lineChar, line.c_str());
 				pch = strtok(lineChar, " ");
-				while (pch != NULL)
+				while (pch != NULL) //While you're not at the end of the current line
 				{
-					cout << pch << endl;
+					int expectedWinCondition;
+					//Hand Cards
+					if (i < 4)
+					{
+						//cout << "Hand Cards" << endl;
+						if (i % 2 == 0) //Read a card value
+						{
+							cardsToDeal[i] = atoi(pch);
+						}
+						else //Read a card suit
+						{
+							cardsToDeal[i] = *pch;
+						}
+						//cout << cardsToDeal[i] << endl;
+					}
+					//Shared Cards
+					if (i >= 4 && i <= 13)
+					{
+						//cout << "Pool Cards" << endl;
+						if (i % 2 == 0)
+						{
+							sharedHandCards[i - 4] = atoi(pch);
+						}
+						else
+						{
+							sharedHandCards[i - 4] = *pch;
+						}
+						//cout << sharedHandCards[i-4] << endl;
+					}
+					if (i == 14)
+						expectedWinCondition = atoi(pch);
 					pch = strtok(NULL, " ");
-					cardsToDeal[i] = stoi(pch);
 					i++;
+					if (i == 15) //All cards have been read for that game
+					{
+						int winCondition;
+						game.DEBUG_FILE_dealCards(cardsToDeal, players);
+						game.DEBUG_sharedHand(sharedHandCards);
+						for (int i = 0; i < 1; i++)
+						{
+							cout << "Player # " << players[i].getID() << "'s hand: ";
+							players[i].printHand();
+						}
+						game.printSharedHand();
+						winCondition = game.findWinner(players);
+						if (winCondition != expectedWinCondition)
+						{
+							cout << "Failure: win condition should be " << expectedWinCondition << ". Is " << winCondition;
+						}
+						cout << endl;
+						assert(winCondition == expectedWinCondition);
+						i = 0;
+					}
 				}
-				//cardsToDeal[0] = istringstream(line.substr(0, line.find(delimiter)));
-				//cout << i << endl;
-				cout << line << endl;
+				//cout << line << endl;
 			}
 		}
 		return 0;
 	}
 	else { //Standard mode
 		game.dealCards(players);
+		game.flop();
+		game.turn();
+		game.river();
+	}
 		for (int i = 0; i < 2; i++)
 		{
 			cout << "Player # " << players[i].getID() << "'s hand: ";
 			players[i].printHand();
 		}
-		game.flop();
-		game.turn();
-		game.river();
-	}
 	game.printSharedHand();
 	game.findWinner(players);
-/*
+
 	//Write game output to file
 	if (argc == 1)
 	{
@@ -75,11 +123,15 @@ int main(int argc, char* argv[]){
 		if (writeToFile == 'y' || writeToFile == 'Y')
 		{
 			ofstream savedGamesFile;
+			ofstream gamesToTestFile;
 			savedGamesFile.open("savedGames.txt", ios::app);
-			string notesOnGame;
+			gamesToTestFile.open("regTestGames.txt", ios::app);
+			/*string notesOnGame;
 			cout << "Notes: ";
 			cin >> notesOnGame; //THIS DOESN'T READ SPACES, NEEDS TO BE FIXED
 			savedGamesFile << "Notes: " << notesOnGame << "\n";
+			*/
+			//Write As Readable
 			for (int i = 0; i < 2; i++)
 			{
 				savedGamesFile << "Player # " << i + 1 << "'s hand: ";
@@ -93,8 +145,22 @@ int main(int argc, char* argv[]){
 			{
 				savedGamesFile << game.DEBUG_getSharedHand()[i].getValue() << game.DEBUG_getSharedHand()[i].getSuit()[0] << " ";
 			}
+			
+			//Write to regression test file
+			for (int i = 0; i < 2; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					gamesToTestFile << players[i].hand[j].getValue() << " " << players[i].hand[j].getSuit()[0] << " ";
+				}
+				gamesToTestFile << endl;
+			}
+			for (int i = 0; i < 5; i++)
+			{
+				gamesToTestFile << game.DEBUG_getSharedHand()[i].getValue() << " " << game.DEBUG_getSharedHand()[i].getSuit()[0] << " ";
+			}
 
-			//Write Code in file
+			/*//Write Code in file
 			savedGamesFile << "\nint cardsToDeal[8] = {";
 			for (int i = 0; i < 2; i++)
 			{
@@ -116,9 +182,13 @@ int main(int argc, char* argv[]){
 					savedGamesFile << "}\n";
 			}
 			savedGamesFile << "game.DEBUG_sharedHand(sharedHandCards)";
+			*/
 			savedGamesFile << endl;
 			savedGamesFile << endl;
+			gamesToTestFile << endl;
+			gamesToTestFile << endl;
 			savedGamesFile.close();
+			gamesToTestFile.close();
 		}
-	}*/
+	}
 }
