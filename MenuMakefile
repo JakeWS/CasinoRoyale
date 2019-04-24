@@ -5,7 +5,7 @@ CFLAGS= -std=c++11 -O2 -g $(INCLUDE_DIRS) $(CDEFS)
 
 PRODUCT=CasinoApp
 
-HFILES= 
+HFILES= slots.h roulette.h
 CFILES= main.cc
 
 SRCS= ${HFILES} ${CFILES}
