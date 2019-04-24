@@ -1,0 +1,12 @@
+Player # 1's hand: 13C 6C 
+Player # 2's hand: 5S 8S 
+14C 12D 10S 13D 12H 
+
+Player # 1's hand: 12S 3S 
+Player # 2's hand: 6H 8H 
+4C 10S 11C 8D 3H 
+
+Player # 1's hand: 4H 3S 
+Player # 2's hand: 10D 8C 
+3D 12C 6S 6H 7C 
+
