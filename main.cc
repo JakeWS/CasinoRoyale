@@ -1,6 +1,7 @@
 #include <iostream>
-#include "slots.cc"
-#include "login.cc"
+#include "slots.h"
+#include "login.h"
+#include "roulette.h"
 
 using namespace std;
 
@@ -64,7 +65,7 @@ void mainMenu::playGames()
     bool gameContinue = 1;
     while (gameContinue)
     {
-        cout<<"What would you like to play?"<<endl<<"0. Exit"<<endl<<"1. Slots"<<endl;
+        cout<<"What would you like to play?"<<endl<<"0. Exit"<<endl<<"1. Slots"<<endl<<"2. Roulette"<<endl;
         cin>>gameChoice;
         if (gameChoice == 0)
         {
@@ -75,6 +76,10 @@ void mainMenu::playGames()
         {
             SlotMachine newSlots;
         }
+		else if (gameChoice == 2)
+		{
+			RouletteTable newRoulette;
+		}
         else
         {
             cout<<"Unable to process, please respond to the prompt again."<<endl;            
