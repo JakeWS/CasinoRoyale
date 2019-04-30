@@ -1,35 +1,11 @@
 // Options.cc
 
 #include <iostream>
-#include "graphics.h"
+#include "graphics.hpp"
+#include "Options.hpp"
 
 using namespace std;
 
-class Options
-{
-  private:
-
-  public:
-    bool continueLoop;
-    int userAction;
-    int userFont;
-    int userChoice;
-    Options();  // constructor
-    //int setFont(); // in graphics.hpp
-    //int setColor();  // in graphics.hpp
-};
-// test driver
-
-// # defines for "magic numbers"
-// use enumeration and implement switch and case instead of if else
-  // change the numbers ionto # defines
-
-  //
-
-int main()
-{
-  Options newOptions;
-}
 
 Options::Options()
 {
@@ -63,13 +39,13 @@ Options::Options()
       {
         std::cout<<"Setting font to desired font choice..."<<std::endl;
         //set font function
-        setFont(1);
+        //setFont(1);
       }
       else if(userFont == 2)
       {
         std::cout<<"Setting font to desired font choice..."<<std::endl;
         //set font function
-        setFont(2);
+        //setFont(2);
       }
       else
       {
