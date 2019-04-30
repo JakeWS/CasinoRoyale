@@ -1,40 +1,14 @@
+// Blackjack library module
+//
 #include <iostream>
 #include "Card.cc"
-#include "Card.h"
+#include "Card.hpp"
 #include "Deck.cc"
-#include "Deck.h"
+#include "Deck.hpp"
+#include "blackjack.hpp"
 
 using namespace std;
 
-// int countcardTotal(char[10][2], int);
-
-class BlackJack
-{
-  private:
-
-  public:
-    BlackJack();         // Blackjack constructor
-    ~BlackJack();        // Blackjack destructor
-    bool userChoice;     // Hit or stay (?)
-    short cardTotal;     // stored value of the hand
-    card userHand;       // Users cards (2 cards to start) [should be able to hold an infinite amount of cards]
-    card discardPile;    // Discard pile
-    card drawPile;       // Gives user 1 card when they hit
-    card shuffleDeck;    // Shuffles deck
-    card dealCards;      // Deals cards (2 cards per person [user/dealer])
-    void countHand();    // count cardTotal for Blackjack
-    void detWin();       // Uses cardTotal, checks if hand is == 21, then it's a winning hand
-    void Hit();          // Hit means "give me more cards"
-    void Stay();         // Stay means "i am done, give me no more cards"
-};
-
-//Main Function
-int main()
-{
-  BlackJack newBlackJack;
-}
-
-// BlackJack
 BlackJack::BlackJack()
 {
   bool continueLoop = true;
@@ -125,9 +99,9 @@ void BlackJack::Hit()
 
   do{
     countHand();
-    cout<<"You have: "<<cardTotal<<"What would you like to do now?"<<<"1. Hit."<< endl<<"2. Stay."<< endl;
+    cout<<"You have: "<<cardTotal<<"What would you like to do now?"<<"1. Hit."<<endl<<"2. Stay."<< endl;
 
-  }while(userChoice == 1)
+  }while(userChoice == 1);
 
 }
 
@@ -152,7 +126,7 @@ void BlackJack::Stay()  //If user stays, they will be dealt no cards and it will
       BlackJack();  // starts a new game
     }
   }
-  else(cardTotal < 21)  // If card total is less than 21, just print out amount
+  else  // If card total is less than 21, just print out amount
   {
     cout<<"You have: "<<cardTotal<<endl;
   }

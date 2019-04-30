@@ -2,7 +2,7 @@
 
 #include <chrono>
 #include <random>
-#include "randGen.h"
+#include "randGen.hpp"
 
 using namespace std;
 

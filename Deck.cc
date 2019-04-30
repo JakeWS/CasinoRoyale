@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <algorithm>
-#include "Deck.h"
-#include "randGen.h"
+#include "Deck.hpp"
+#include "randGen.hpp"
 
 using namespace std;
 
