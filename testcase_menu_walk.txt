@@ -1,5 +1,20 @@
-1
-1
-2
-0
-0
+//Notes on this test file:
+//All lines with "//" at the beginning will not be read by the test driver. Not all possible combinations will be listed here.
+
+//Yes to change font, font1, yes to change color, no change, exit
+1 1 2 0 0 
+
+//Yes to change font, font1, yes to change color, color2, exit
+1 1 2 2 0 
+
+//Yes to change font, no change, yes to change color, color 2, exit
+1 0 2 2 0 
+
+//Yes to change color, color1, yes to change font, no change, exit
+2 1 1 0 0
+
+//Yes to change color, color2, yes to change font, no change, exit
+2 2 1 0 0
+
+//Yes to chance font, font1, yes to change font, font2, exit
+1 1 1 2 0
